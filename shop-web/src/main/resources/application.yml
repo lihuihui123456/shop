@@ -1,6 +1,6 @@
 #内置服务器配置
 server:
-  port: 8070
+  port: 8076
 
 
 #数据源配置
@@ -23,17 +23,8 @@ mybatis:
   mapper-locations: classpath:mapping/*.xml
   #映射实体类包路径
   type-aliases-package: com.lzh.shopentity
-  configuration:
-    cache-enabled: true
-    lazy-loading-enabled: true
-    multiple-result-sets-enabled: true
-    default-executor-type: simple
-    default-statement-timeout: 25000
-    log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
-
 
 #showSql
 logging:
   level:
-    com:lzh:shopdao:mapper: debug
-debug: true
+    com:lzh:shopdao:mapper: DEBUG
