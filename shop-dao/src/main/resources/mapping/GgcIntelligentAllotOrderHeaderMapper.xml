@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shopdao.mapper.GgcIntelligentAllotOrderHeaderMapper">
+    <resultMap id="GgcIntelligentAllotOrderHeaderMap" type="GgcIntelligentAllotOrderHeader">
+        <result column="CODE" jdbcType="VARCHAR" property="code"/>
+        <result column="FROM_WARE_HOUSE_ID" jdbcType="DECIMAL" property="fromWareHouseId"/>
+        <result column="TO_WARE_HOUSE_ID" jdbcType="DECIMAL" property="toWareHouseId"/>
+        <result column="GOODS_KIND_NUM" jdbcType="DECIMAL" property="goodsKindNum"/>
+        <result column="GOODS_TOTAL_NUM" jdbcType="DECIMAL" property="goodsTotalNum"/>
+        <result column="STATUS" jdbcType="DECIMAL" property="status"/>
+        <result column="PRINT_NUMBER" jdbcType="DECIMAL" property="printNumber"/>
+        <result column="LAST_PRINT_TIME" jdbcType="TIMESTAMP" property="lastPrintTime"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="CREATE_PARTY_ID" jdbcType="DECIMAL" property="createPartyId"/>
+        <result column="CREATE_USER_ID" jdbcType="DECIMAL" property="createUserId"/>
+        <result column="TRANSFER_NOTES" jdbcType="VARCHAR" property="transferNotes"/>
+        <result column="BUSINESS_TYPE" jdbcType="DECIMAL" property="businessType"/>
+        <result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney"/>
+        <result column="ID" jdbcType="DECIMAL" property="id"/>
+        <result column="VERSION" jdbcType="DECIMAL" property="version"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        CODE,FROM_WARE_HOUSE_ID,TO_WARE_HOUSE_ID,GOODS_KIND_NUM,GOODS_TOTAL_NUM,STATUS,PRINT_NUMBER,LAST_PRINT_TIME,CREATE_TIME,CREATE_PARTY_ID,CREATE_USER_ID,TRANSFER_NOTES,BUSINESS_TYPE,TOTAL_MONEY,ID,VERSION
+    </sql>
+    <sql id="GIAH_Base_Column_List">
+        GIAH.CODE,GIAH.FROM_WARE_HOUSE_ID,GIAH.TO_WARE_HOUSE_ID,GIAH.GOODS_KIND_NUM,GIAH.GOODS_TOTAL_NUM,GIAH.STATUS,GIAH.PRINT_NUMBER,GIAH.LAST_PRINT_TIME,GIAH.CREATE_TIME,GIAH.CREATE_PARTY_ID,GIAH.CREATE_USER_ID,GIAH.TRANSFER_NOTES,GIAH.BUSINESS_TYPE,GIAH.TOTAL_MONEY,GIAH.ID,GIAH.VERSION
+    </sql>
+    <select id="get" parameterType="long" resultMap="GgcIntelligentAllotOrderHeaderMap" useCache="false">
+        select
+        <include refid="Base_Column_List"/>
+        from GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        where ID = #{id,jdbcType=DECIMAL}
+    </select>
+    <delete id="delete" parameterType="long">
+        delete
+        from GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        where ID = #{id,jdbcType=DECIMAL}
+    </delete>
+    <insert id="insert" parameterType="GgcIntelligentAllotOrderHeader">
+        insert into GGC_INTELLIGENT_ALLOTORDER_HEADER(
+        <include refid="Base_Column_List"/>
+        ) values (
+        #{code,jdbcType=VARCHAR},
+        #{fromWareHouseId,jdbcType=DECIMAL},
+        #{toWareHouseId,jdbcType=DECIMAL},
+        #{goodsKindNum,jdbcType=DECIMAL},
+        #{goodsTotalNum,jdbcType=DECIMAL},
+        #{status,jdbcType=DECIMAL},
+        #{printNumber,jdbcType=DECIMAL},
+        #{lastPrintTime,jdbcType=TIMESTAMP},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{createPartyId,jdbcType=DECIMAL},
+        #{createUserId,jdbcType=DECIMAL},
+        #{transferNotes,jdbcType=VARCHAR},
+        #{businessType,jdbcType=DECIMAL},
+        #{totalMoney,jdbcType=DECIMAL},
+        #{id,jdbcType=DECIMAL},
+        #{version,jdbcType=DECIMAL}
+        )
+    </insert>
+    <update id="update" parameterType="GgcIntelligentAllotOrderHeader">
+        update GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        <set>
+            VERSION = VERSION + 1
+            <if test="code != null">
+                ,CODE = #{code,jdbcType=VARCHAR}
+            </if>
+            <if test="fromWareHouseId != null">
+                ,FROM_WARE_HOUSE_ID = #{fromWareHouseId,jdbcType=DECIMAL}
+            </if>
+            <if test="toWareHouseId != null">
+                ,TO_WARE_HOUSE_ID = #{toWareHouseId,jdbcType=DECIMAL}
+            </if>
+            <if test="goodsKindNum != null">
+                ,GOODS_KIND_NUM = #{goodsKindNum,jdbcType=DECIMAL}
+            </if>
+            <if test="goodsTotalNum != null">
+                ,GOODS_TOTAL_NUM = #{goodsTotalNum,jdbcType=DECIMAL}
+            </if>
+            <if test="status != null">
+                ,STATUS = #{status,jdbcType=DECIMAL}
+            </if>
+            <if test="printNumber != null">
+                ,PRINT_NUMBER = #{printNumber,jdbcType=DECIMAL}
+            </if>
+            <if test="lastPrintTime != null">
+                ,LAST_PRINT_TIME = #{lastPrintTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createTime != null">
+                ,CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+            <if test="createPartyId != null">
+                ,CREATE_PARTY_ID = #{createPartyId,jdbcType=DECIMAL}
+            </if>
+            <if test="createUserId != null">
+                ,CREATE_USER_ID = #{createUserId,jdbcType=DECIMAL}
+            </if>
+            <if test="transferNotes != null">
+                ,TRANSFER_NOTES = #{transferNotes,jdbcType=VARCHAR}
+            </if>
+            <if test="businessType != null">
+                ,BUSINESS_TYPE = #{businessType,jdbcType=DECIMAL}
+            </if>
+            <if test="totalMoney != null">
+                ,TOTAL_MONEY = #{totalMoney,jdbcType=DECIMAL}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+    </update>
+    <select id="findListForExample" parameterType="GgcIntelligentAllotOrderHeader"
+            resultMap="GgcIntelligentAllotOrderHeaderMap" useCache="false">
+        select
+        <include refid="GIAH_Base_Column_List"/>
+        from GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        <include refid="common_query_condition"/>
+    </select>
+    <select id="findListForMap" parameterType="map" resultMap="GgcIntelligentAllotOrderHeaderMap" useCache="false">
+        select
+        <include refid="GIAH_Base_Column_List"/>
+        from GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        <include refid="common_query_condition"/>
+        order by GIAH.CREATE_TIME desc
+    </select>
+    <select id="findListForMapCount" parameterType="map" resultMap="GgcIntelligentAllotOrderHeaderMap" useCache="false">
+        select
+        GIAH.CODE,GIAH.FROM_WARE_HOUSE_ID,
+        GIAH.TO_WARE_HOUSE_ID,
+        COUNT(GIAD.id) as goodsKindNum,
+        SUM(GIAD.PLAN_ALLOT_QUANTITY) as goodsTotalNum,
+        GIAH.STATUS,
+        GIAH.PRINT_NUMBER,
+        GIAH.LAST_PRINT_TIME,
+        GIAH.CREATE_TIME,
+        GIAH.CREATE_PARTY_ID,
+        GIAH.CREATE_USER_ID,
+        GIAH.TRANSFER_NOTES,
+        GIAH.BUSINESS_TYPE,
+        GIAH.ID,
+        wh.name as fromWareHouseName,
+        GICi.name as znhgName,
+        pp.short_name as customerName
+        <include refid="findListForMapCount_body"/>
+    </select>
+    <select id="findListForMapCountSize" parameterType="map" resultType="int" useCache="false">
+        select count(a.id) from GGC_INTELLIGENT_ALLOTORDER_HEADER a
+    </select>
+    <sql id="findListForMapCount_body">
+        from GGC_INTELLIGENT_ALLOTORDER_HEADER GIAH
+        inner join GGC_INTELLIGENT_ALLOTORDER_DETAIL GIAD on GIAD.GGC_INTELLIGENT_ALLOT_ORDER_HEADER_ID =GIAH.ID
+        left join GGC_INTELLIGENT_CONTAINER_INFO GICi on GICi.id=GIAH.TO_WARE_HOUSE_ID
+        left join GGC_INTELLIGENT_CONTAINER GIC on GIC.id=GICi.ELECTRICAL_ID
+        left join PAR_PARTY pp on pp.id=GIC.CUSTOMER_PARTY_ID
+        left join GGC_WARE_HOUSE_TO_V wh on GIAH.FROM_WARE_HOUSE_ID = wh.ID
+        <include refid="common_query_condition"/>
+        <if test="detailStatus != null">
+            AND GIAD.STATUS=#{detailStatus}
+        </if>
+        group by GIAH.ID
+        order by GIAH.CREATE_TIME desc
+    </sql>
+    <sql id="common_query_condition">
+        <where>
+            <if test="code != null">
+                AND GIAH.CODE LIKE CONCAT('%',#{code},'%')
+            </if>
+            <if test="allotOrderCode != null">
+                AND GIAH.CODE LIKE CONCAT('%',#{allotOrderCode},'%')
+            </if>
+            <if test="fromWareHouseId != null">
+                AND GIAH.FROM_WARE_HOUSE_ID = #{fromWareHouseId}
+            </if>
+            <if test="toWareHouseId != null">
+                AND GIAH.TO_WARE_HOUSE_ID = #{toWareHouseId}
+            </if>
+            <if test="goodsKindNum != null">
+                AND GIAH.GOODS_KIND_NUM = #{goodsKindNum}
+            </if>
+            <if test="goodsTotalNum != null">
+                AND GIAH.GOODS_TOTAL_NUM = #{goodsTotalNum}
+            </if>
+            <if test="status != null">
+                AND GIAH.STATUS = #{status}
+            </if>
+            <if test="printNumber != null">
+                AND GIAH.PRINT_NUMBER = #{printNumber}
+            </if>
+            <if test="lastPrintTimeBegin != null">
+                <![CDATA[AND GIAH.LAST_PRINT_TIME >= STR_TO_DATE(#{lastPrintTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+            </if>
+            <if test="lastPrintTimeEnd != null">
+                <![CDATA[AND GIAH.LAST_PRINT_TIME <= STR_TO_DATE(#{lastPrintTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+            </if>
+            <if test="createTimeBegin != null">
+                <![CDATA[AND GIAH.CREATE_TIME >= STR_TO_DATE(#{createTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+            </if>
+            <if test="createTimeEnd != null">
+                <![CDATA[AND GIAH.CREATE_TIME <= STR_TO_DATE(#{createTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+            </if>
+            <if test="createPartyId != null">
+                AND GIAH.CREATE_PARTY_ID = #{createPartyId}
+            </if>
+            <if test="createUserId != null">
+                AND GIAH.CREATE_USER_ID = #{createUserId}
+            </if>
+            <if test="transferNotes != null">
+                AND GIAH.TRANSFER_NOTES LIKE CONCAT('%',#{transferNotes},'%')
+            </if>
+            <if test="businessType != null">
+                AND GIAH.BUSINESS_TYPE = #{businessType}
+            </if>
+            <if test="totalMoney != null">
+                AND GIAH.TOTAL_MONEY = #{totalMoney}
+            </if>
+            <if test="id != null">
+                AND GIAH.ID = #{id}
+            </if>
+            <if test="ids != null">
+                AND GAOD.ID IN
+                <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+                    ${item}
+                </foreach>
+            </if>
+            <if test="version != null">
+                AND GIAH.VERSION = #{version}
+            </if>
+            <if test="znhgCode != null">
+                AND GICi.CODE LIKE CONCAT('%',#{znhgCode},'%')
+            </if>
+            <if test="znhgName != null">
+                AND GICi.NAME LIKE CONCAT('%',#{znhgName},'%')
+            </if>
+            <if test="fromWareHouseName != null">
+                AND wh.name LIKE CONCAT('%',#{fromWareHouseName},'%')
+            </if>
+            <if test="customerCode != null">
+                AND pp.code LIKE CONCAT('%',#{customerCode},'%')
+            </if>
+            <if test="customerName != null">
+                AND pp.name LIKE CONCAT('%',#{customerName},'%')
+            </if>
+        </where>
+    </sql>
+</mapper>
