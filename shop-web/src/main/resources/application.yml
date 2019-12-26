@@ -27,4 +27,5 @@ mybatis:
 #showSql
 logging:
   level:
-    com:lzh:shopdao:mapper: DEBUG
+    org:
+    com.lzh.shopdao.mapper: DEBUG
