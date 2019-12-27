@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,14 +31,14 @@ public class TestController {
 
     @RequestMapping("test")
     public String selectUUser(Model model){
-        int data = ggcStockService.findData();
+        int data = ggcStockService.findDataByMapper();
         model.addAttribute("name", "springboot Freemarker");
         return "index";
     }
     @RequestMapping("test3")
     @ResponseBody  //此标签表示返回json等数据格式 不需要解析视图解析器
     public String selectUUser3(Model model){
-        int data = ggcStockService.findData();
+        int data = ggcStockService.findDataByMapper();
         model.addAttribute("name", "springboot Freemarker");
         return "index";
     }
@@ -65,6 +66,15 @@ public class TestController {
         this.response(response, json.toString());
     }
 
+
+    @RequestMapping("test5")
+    public String selectUUser5(Model model){
+        ggcStockService.findDataByDao();
+        model.addAttribute("name", "springboot Freemarker");
+        return "index";
+    }
+    
+    
     protected void response(HttpServletResponse response, String responseMsg) throws Exception {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();

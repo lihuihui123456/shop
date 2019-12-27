@@ -13,12 +13,12 @@ server:
 
 
 #数据源配置
-spring:
-  datasource:
-    username: root
-    password: 123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.16.21.170:3306/b2bexv32_mall?setUnicode=true&characterEncoding=utf8
+#spring:
+#  datasource:
+#    username: root
+#    password: 123
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://172.16.21.170:3306/b2bexv32_mall?setUnicode=true&characterEncoding=utf8
 #springmvc配置
 
   mvc:
@@ -35,11 +35,11 @@ spring:
 #     url: jdbc:mysql://172.16.21.170:3306/b2bexv32_mall?setUnicode=true&characterEncoding=utf8
 
 #ORM持久层框架配置
-mybatis:
+#mybatis:
   #接口对应Mapper.xml扫描
-  mapper-locations: classpath:mapping/*.xml
+  #mapper-locations: classpath:mapping/*.xml
   #映射实体类包路径
-  type-aliases-package: com.lzh.shopentity
+  #type-aliases-package: com.lzh.shopentity
 
 #showSql
 logging:

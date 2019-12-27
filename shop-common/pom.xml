@@ -2,21 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.lzh.common</groupId>
-    <artifactId>shop-common</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>shop-common</name>
-    <description>Demo project for Spring Boot</description>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <groupId>com.lzh.common</groupId>
+    <artifactId>shop-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>shop-common</name>
+    <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>
+        <start-class>com.lzh.shopweb.ShopWebApplication</start-class>
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -63,10 +63,14 @@
     </dependencies>
 
     <build>
+
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>${start-class}</mainClass>
+                </configuration>
             </plugin>
         </plugins>
     </build>
