@@ -1,11 +1,16 @@
 package com.lzh.shopweb.controller;
 
 import com.lzh.shopservice.GgcStockService;
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Auther: lzh
@@ -20,8 +25,12 @@ public class TestController {
 
     @RequestMapping("test")
     @ResponseBody
-    public int selectUUser(){
+    public ModelAndView selectUUser(Model model){
         int data = ggcStockService.findData();
-        return data;
+        Map<String, Object> data1 = new HashMap<>(2);
+        data1.put("name", "springboot Freemarker");
+        data1.put("now", new Date());
+        //如何配置试图解析器
+        return new ModelAndView("index", data1);
     }
 }

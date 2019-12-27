@@ -1,6 +1,15 @@
+##yml基本语法
+##yml文件以缩进代表层级关系
+##缩进不允许使用tab只能使用空格
+##空格的个数不重要，只要相同层级的元素左对齐即可
+##大小写敏感
+##数据格式为，名称:(空格)值
+
+
+
 #内置服务器配置
 server:
-  port: 8076
+  port: 8077
 
 
 #数据源配置
@@ -10,6 +19,14 @@ spring:
     password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://172.16.21.170:3306/b2bexv32_mall?setUnicode=true&characterEncoding=utf8
+#springmvc配置
+
+  mvc:
+    view:
+      prefix: /template/ # 页面默认前缀目录
+      suffix: .html   # 响应页面默认后缀
+
+
 # spring:
 #   datasource1:
 #     username: root
