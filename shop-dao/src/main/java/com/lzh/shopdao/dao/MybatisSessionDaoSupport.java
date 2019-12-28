@@ -19,7 +19,7 @@ public abstract class MybatisSessionDaoSupport extends DaoSupport {
 
     protected SqlSession sqlSession;
 
-    @Resource(name = "writeSqlSessionFactory")
+    @Resource(name = "readSqlSessionFactory")
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         this.sqlSession = new SqlSessionTemplate(sqlSessionFactory);
     }

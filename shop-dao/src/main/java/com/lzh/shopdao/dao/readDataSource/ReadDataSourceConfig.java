@@ -19,7 +19,9 @@ import javax.sql.DataSource;
  * @Date: 2019/12/27 17:31
  * @Description:
  */
-@Deprecated
+@Configuration
+// 扫描 Mapper 接口并容器管理
+@MapperScan(basePackages = "com.lzh.shopdao.mapper.readMapper", sqlSessionFactoryRef = "readSqlSessionFactory")
 public class ReadDataSourceConfig {
     /**
      * @Bean 注册Bean对象
@@ -42,7 +44,7 @@ public class ReadDataSourceConfig {
         SqlSessionFactoryBean bean = new SqlSessionFactoryBean();
         bean.setDataSource(datasource);
         //mybatis扫描xml所在位置
-        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/*.xml"));
+        bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapping/readMapping/*.xml"));
          bean.setTypeAliasesPackage("com.lzh.shopentity");
         return bean.getObject();
     }

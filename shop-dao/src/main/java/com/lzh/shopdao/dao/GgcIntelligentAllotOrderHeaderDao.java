@@ -1,6 +1,7 @@
 package com.lzh.shopdao.dao;
 
 import com.lzh.shopdao.mapper.GgcIntelligentAllotOrderHeaderMapper;
+import com.lzh.shopdao.mapper.readMapper.UserMapper;
 import com.lzh.shopentity.GgcIntelligentAllotOrderHeader;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -17,8 +18,10 @@ public class GgcIntelligentAllotOrderHeaderDao extends MyBatisDao<GgcIntelligent
                  super.setSqlSessionFactory(sqlSessionFactory); }*/
     @Autowired
     private GgcIntelligentAllotOrderHeaderMapper ggcIntelligentAllotOrderHeaderMapper;
-
+  @Autowired
+  private UserMapper userMapper;
     public int findListForMapCountSize(Map filter) {
         return ggcIntelligentAllotOrderHeaderMapper.findListForMapCountSize(filter);
     }
+
 }

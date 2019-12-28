@@ -1,6 +1,7 @@
 package com.lzh.shopweb.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.lzh.shopentity.User;
 import com.lzh.shopservice.GgcStockService;
 import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,18 @@ public class TestController {
         model.addAttribute("name", "springboot Freemarker");
         return "index";
     }
+    @RequestMapping("test5")
+    public String selectUUser5(Model model){
+        ggcStockService.findDataByDao();
+        model.addAttribute("name", "springboot Freemarker");
+        return "index";
+    }
+    @RequestMapping("test6")
+    public String selectUUser6(Model model){
+        User user = ggcStockService.findUser(123L);
+        model.addAttribute("name", user.getName());
+        return "index";
+    }
     @RequestMapping("test3")
     @ResponseBody  //此标签表示返回json等数据格式 不需要解析视图解析器
     public String selectUUser3(Model model){
@@ -67,12 +80,7 @@ public class TestController {
     }
 
 
-    @RequestMapping("test5")
-    public String selectUUser5(Model model){
-        ggcStockService.findDataByDao();
-        model.addAttribute("name", "springboot Freemarker");
-        return "index";
-    }
+   
     
     
     protected void response(HttpServletResponse response, String responseMsg) throws Exception {
