@@ -30,6 +30,12 @@ public class TestController {
     @Autowired
     private GgcStockService ggcStockService;
 
+
+    private int sayHello(){
+        System.out.println("zheqing:");
+        return  1;
+    }
+
     @RequestMapping("test")
     public String selectUUser(Model model){
         int data = ggcStockService.findDataByMapper();
