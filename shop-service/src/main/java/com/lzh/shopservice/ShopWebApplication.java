@@ -1,6 +1,5 @@
-package com.lzh.shopweb.controller;
+package com.lzh.shopservice;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,10 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com"})   //spring管理的bean
 @EnableAutoConfiguration
-@MapperScan("mapper")//mybatis 配置扫描
-public class DemoApplication {
-
+//@MapperScan("com.lzh.shopdao.mapper")//mybatis 配置扫描
+public class ShopWebApplication {
     public static void main(String[] args) {
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(ShopWebApplication.class, args);
     }
 }

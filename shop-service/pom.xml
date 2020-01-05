@@ -45,10 +45,15 @@
 
     <build>
         <plugins>
-            <plugin>
+            <!-- 打包是可执行jar覆盖了maven管理的依赖包jar，因此dao service common等需保证不会覆盖 -->
+
+       <!--     <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
+                <configuration>
+                    <classifier>exec</classifier>
+                </configuration>
+            </plugin>-->
         </plugins>
     </build>
 

@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lizhenghui</groupId>
-    <artifactId>service</artifactId>
+    <artifactId>shop</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>service</name>
     <packaging>pom</packaging>
@@ -55,6 +55,8 @@
 
     <build>
         <plugins>
+            <!-- 打包是可执行jar覆盖了maven管理的依赖包jar，因此dao service common等需保证不会覆盖 -->
+
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
