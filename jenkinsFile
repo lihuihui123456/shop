@@ -1,0 +1,52 @@
+pipeline {
+
+ agent any  // 在可用的节点运行s
+  tools {
+      // Install the Maven version configured as "maven3" and add it to the path.这里的插件环境需要到整体配置进行配置才能使用
+      maven 'maven3'
+        jdk 'Jdk8'
+  }
+
+        stages {
+                 stage('prepare') {
+                       steps{
+                           echo '开始'
+                            }
+                                     
+                             }
+         // 拉取git代码仓库
+                    stage('Checkout') {
+                       steps{
+                           echo 'GitSCM'
+                       checkout([$class: 'GitSCM', branches: [[name: '*/hotfixBranch']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/lihuihui123456/shop.git']]])
+                            }
+                                      }
+
+          // 构建ssss
+         stage('Build') {
+            steps {
+                echo 'Building'
+                //mvn指令只有tool配置了才能使用 否则只能withMaven这样配置环境
+                          bat 'mvn clean install' 
+                // withMaven(jdk: 'jdk', maven: 'maven') {
+                //           bat 'mvn clean install' 
+                //         } 
+            
+                  }
+                }
+
+    
+    //   stage('Deploy') {
+    //         steps {
+    //             echo 'Deploying'
+    //             sh 'mvn clean deploy'  # 此处调用脚本或者ansible、saltstak，部署到远程
+    //         }
+    //     }
+           stage('end') {
+                       steps{
+                           echo 'success！'
+                            }
+                                     
+                             }
+        }
+       }
