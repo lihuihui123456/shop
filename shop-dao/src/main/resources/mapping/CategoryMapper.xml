@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.CategoryMapper">
+	<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+	<resultMap id="CategoryMap" type="Category">
+	<result column="CODE" jdbcType="VARCHAR" property="code"/>
+	<result column="NAME" jdbcType="VARCHAR" property="name"/>
+	<result column="PARENT_ID" jdbcType="DECIMAL" property="parentId"/>
+	<result column="LEVEL" jdbcType="DECIMAL" property="level"/>
+	<result column="IS_END_LEVEL" jdbcType="DECIMAL" property="isEndLevel"/>
+	<result column="STATUS" jdbcType="DECIMAL" property="status"/>
+	<result column="SEQ" jdbcType="DECIMAL" property="seq"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	CODE,NAME,PARENT_ID,LEVEL,IS_END_LEVEL,STATUS,SEQ,ID,VERSION
+</sql>
+<sql id="CT_Base_Column_List">
+	CT.CODE,CT.NAME,CT.PARENT_ID,CT.LEVEL,CT.IS_END_LEVEL,CT.STATUS,CT.SEQ,CT.ID,CT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="CategoryMap">
+	select
+		<include refid="Base_Column_List"/>
+	from CATEGORY CT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from CATEGORY CT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="Category">
+	insert into CATEGORY(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{code,jdbcType=VARCHAR},
+	#{name,jdbcType=VARCHAR},
+	#{parentId,jdbcType=DECIMAL},
+	#{level,jdbcType=DECIMAL},
+	#{isEndLevel,jdbcType=DECIMAL},
+	#{status,jdbcType=DECIMAL},
+	#{seq,jdbcType=DECIMAL},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="Category">
+	update CATEGORY CT
+	<set>
+		VERSION = VERSION + 1
+		<if test="code != null">
+		,CODE = #{code,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+		,NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="parentId != null">
+		,PARENT_ID = #{parentId,jdbcType=DECIMAL}
+		</if>
+		<if test="level != null">
+		,LEVEL = #{level,jdbcType=DECIMAL}
+		</if>
+		<if test="isEndLevel != null">
+		,IS_END_LEVEL = #{isEndLevel,jdbcType=DECIMAL}
+		</if>
+		<if test="status != null">
+		,STATUS = #{status,jdbcType=DECIMAL}
+		</if>
+		<if test="seq != null">
+		,SEQ = #{seq,jdbcType=DECIMAL}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="Category" resultMap="CategoryMap">
+	select
+	<include refid="CT_Base_Column_List"/>
+	from CATEGORY CT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="CategoryMap">
+	select
+	<include refid="CT_Base_Column_List"/>
+	from CATEGORY CT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="code != null">
+		AND CT.CODE LIKE CONCAT('%',#{code},'%')
+		</if>
+		<if test="name != null">
+		AND CT.NAME LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="parentId != null">
+		AND CT.PARENT_ID = #{parentId}
+		</if>
+		<if test="level != null">
+		AND CT.LEVEL = #{level}
+		</if>
+		<if test="isEndLevel != null">
+		AND CT.IS_END_LEVEL = #{isEndLevel}
+		</if>
+		<if test="status != null">
+		AND CT.STATUS = #{status}
+		</if>
+		<if test="seq != null">
+		AND CT.SEQ = #{seq}
+		</if>
+		<if test="id != null">
+		AND CT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND CT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

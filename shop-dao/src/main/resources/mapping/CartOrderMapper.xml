@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.CartOrderMapper">
+<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+<resultMap id="CartOrderMap" type="CartOrder">
+	<result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+	<result column="GOODS_ID" jdbcType="DECIMAL" property="goodsId"/>
+	<result column="GOODS_UNIT" jdbcType="VARCHAR" property="goodsUnit"/>
+	<result column="MIN_PACKAGE_QUANTITY" jdbcType="DECIMAL" property="minPackageQuantity"/>
+	<result column="QUANTITY" jdbcType="DECIMAL" property="quantity"/>
+	<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+	<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	USER_ID,GOODS_ID,GOODS_UNIT,MIN_PACKAGE_QUANTITY,QUANTITY,CREATE_TIME,UPDATE_TIME,ID,VERSION
+</sql>
+<sql id="COT_Base_Column_List">
+	COT.USER_ID,COT.GOODS_ID,COT.GOODS_UNIT,COT.MIN_PACKAGE_QUANTITY,COT.QUANTITY,COT.CREATE_TIME,COT.UPDATE_TIME,COT.ID,COT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="CartOrderMap">
+	select
+		<include refid="Base_Column_List"/>
+	from CARTORDER COT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from CARTORDER COT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="CartOrder">
+	insert into CARTORDER(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{userId,jdbcType=DECIMAL},
+	#{goodsId,jdbcType=DECIMAL},
+	#{goodsUnit,jdbcType=VARCHAR},
+	#{minPackageQuantity,jdbcType=DECIMAL},
+	#{quantity,jdbcType=DECIMAL},
+	#{createTime,jdbcType=TIMESTAMP},
+	#{updateTime,jdbcType=TIMESTAMP},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="CartOrder">
+	update CARTORDER COT
+	<set>
+		VERSION = VERSION + 1
+		<if test="userId != null">
+		,USER_ID = #{userId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsId != null">
+		,GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsUnit != null">
+		,GOODS_UNIT = #{goodsUnit,jdbcType=VARCHAR}
+		</if>
+		<if test="minPackageQuantity != null">
+		,MIN_PACKAGE_QUANTITY = #{minPackageQuantity,jdbcType=DECIMAL}
+		</if>
+		<if test="quantity != null">
+		,QUANTITY = #{quantity,jdbcType=DECIMAL}
+		</if>
+		<if test="createTime != null">
+		,CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateTime != null">
+		,UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="CartOrder" resultMap="CartOrderMap">
+	select
+	<include refid="COT_Base_Column_List"/>
+	from CARTORDER COT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="CartOrderMap">
+	select
+	<include refid="COT_Base_Column_List"/>
+	from CARTORDER COT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="userId != null">
+		AND COT.USER_ID = #{userId}
+		</if>
+		<if test="goodsId != null">
+		AND COT.GOODS_ID = #{goodsId}
+		</if>
+		<if test="goodsUnit != null">
+		AND COT.GOODS_UNIT LIKE CONCAT('%',#{goodsUnit},'%')
+		</if>
+		<if test="minPackageQuantity != null">
+		AND COT.MIN_PACKAGE_QUANTITY = #{minPackageQuantity}
+		</if>
+		<if test="quantity != null">
+		AND COT.QUANTITY = #{quantity}
+		</if>
+		<if test="createTimeBegin != null">
+		<![CDATA[AND COT.CREATE_TIME >= STR_TO_DATE(#{createTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="createTimeEnd != null">
+		<![CDATA[AND COT.CREATE_TIME <= STR_TO_DATE(#{createTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeBegin != null">
+		<![CDATA[AND COT.UPDATE_TIME >= STR_TO_DATE(#{updateTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeEnd != null">
+		<![CDATA[AND COT.UPDATE_TIME <= STR_TO_DATE(#{updateTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="id != null">
+		AND COT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND COT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

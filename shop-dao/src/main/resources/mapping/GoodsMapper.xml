@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.GoodsMapper">
+	<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+	<resultMap id="GoodsMap" type="Goods">
+	<result column="NAME" jdbcType="VARCHAR" property="name"/>
+	<result column="STANDARD_NAME" jdbcType="VARCHAR" property="standardName"/>
+	<result column="CATEGORY_ID" jdbcType="DECIMAL" property="categoryId"/>
+	<result column="GOODS_LABLE" jdbcType="VARCHAR" property="goodsLable"/>
+	<result column="GOODS_BRAND" jdbcType="VARCHAR" property="goodsBrand"/>
+	<result column="GOODS_DESC" jdbcType="VARCHAR" property="goodsDesc"/>
+	<result column="USER_ID" jdbcType="DECIMAL" property="userId"/>
+	<result column="GOODS_PICTURE_ID" jdbcType="DECIMAL" property="goodsPictureId"/>
+	<result column="GOODS_UNIT_ID" jdbcType="DECIMAL" property="goodsUnitId"/>
+	<result column="GOODS_UNIT" jdbcType="VARCHAR" property="goodsUnit"/>
+	<result column="STATUS" jdbcType="DECIMAL" property="status"/>
+	<result column="ORDER_PRICE" jdbcType="DECIMAL" property="orderPrice"/>
+	<result column="MEMBER_PRICE" jdbcType="DECIMAL" property="memberPrice"/>
+	<result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+	<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	NAME,STANDARD_NAME,CATEGORY_ID,GOODS_LABLE,GOODS_BRAND,GOODS_DESC,USER_ID,GOODS_PICTURE_ID,GOODS_UNIT_ID,GOODS_UNIT,STATUS,ORDER_PRICE,MEMBER_PRICE,ADD_TIME,UPDATE_TIME,ID,VERSION
+</sql>
+<sql id="GT_Base_Column_List">
+	GT.NAME,GT.STANDARD_NAME,GT.CATEGORY_ID,GT.GOODS_LABLE,GT.GOODS_BRAND,GT.GOODS_DESC,GT.USER_ID,GT.GOODS_PICTURE_ID,GT.GOODS_UNIT_ID,GT.GOODS_UNIT,GT.STATUS,GT.ORDER_PRICE,GT.MEMBER_PRICE,GT.ADD_TIME,GT.UPDATE_TIME,GT.ID,GT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="GoodsMap">
+	select
+		<include refid="Base_Column_List"/>
+	from GOODS GT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from GOODS GT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="Goods">
+	insert into GOODS(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{name,jdbcType=VARCHAR},
+	#{standardName,jdbcType=VARCHAR},
+	#{categoryId,jdbcType=DECIMAL},
+	#{goodsLable,jdbcType=VARCHAR},
+	#{goodsBrand,jdbcType=VARCHAR},
+	#{goodsDesc,jdbcType=VARCHAR},
+	#{userId,jdbcType=DECIMAL},
+	#{goodsPictureId,jdbcType=DECIMAL},
+	#{goodsUnitId,jdbcType=DECIMAL},
+	#{goodsUnit,jdbcType=VARCHAR},
+	#{status,jdbcType=DECIMAL},
+	#{orderPrice,jdbcType=DECIMAL},
+	#{memberPrice,jdbcType=DECIMAL},
+	#{addTime,jdbcType=TIMESTAMP},
+	#{updateTime,jdbcType=TIMESTAMP},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="Goods">
+	update GOODS GT
+	<set>
+		VERSION = VERSION + 1
+		<if test="name != null">
+		,NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="standardName != null">
+		,STANDARD_NAME = #{standardName,jdbcType=VARCHAR}
+		</if>
+		<if test="categoryId != null">
+		,CATEGORY_ID = #{categoryId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsLable != null">
+		,GOODS_LABLE = #{goodsLable,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsBrand != null">
+		,GOODS_BRAND = #{goodsBrand,jdbcType=VARCHAR}
+		</if>
+		<if test="goodsDesc != null">
+		,GOODS_DESC = #{goodsDesc,jdbcType=VARCHAR}
+		</if>
+		<if test="userId != null">
+		,USER_ID = #{userId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsPictureId != null">
+		,GOODS_PICTURE_ID = #{goodsPictureId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsUnitId != null">
+		,GOODS_UNIT_ID = #{goodsUnitId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsUnit != null">
+		,GOODS_UNIT = #{goodsUnit,jdbcType=VARCHAR}
+		</if>
+		<if test="status != null">
+		,STATUS = #{status,jdbcType=DECIMAL}
+		</if>
+		<if test="orderPrice != null">
+		,ORDER_PRICE = #{orderPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="memberPrice != null">
+		,MEMBER_PRICE = #{memberPrice,jdbcType=DECIMAL}
+		</if>
+		<if test="addTime != null">
+		,ADD_TIME = #{addTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateTime != null">
+		,UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="Goods" resultMap="GoodsMap">
+	select
+	<include refid="GT_Base_Column_List"/>
+	from GOODS GT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="GoodsMap">
+	select
+	<include refid="GT_Base_Column_List"/>
+	,gp.url as url
+	from GOODS GT
+	left join  goods_picture gp on gp.id =gt.goods_picture_id
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="name != null">
+		AND GT.NAME LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="standardName != null">
+		AND GT.STANDARD_NAME LIKE CONCAT('%',#{standardName},'%')
+		</if>
+		<if test="categoryId != null">
+		AND GT.CATEGORY_ID = #{categoryId}
+		</if>
+		<if test="goodsLable != null">
+		AND GT.GOODS_LABLE LIKE CONCAT('%',#{goodsLable},'%')
+		</if>
+		<if test="goodsBrand != null">
+		AND GT.GOODS_BRAND LIKE CONCAT('%',#{goodsBrand},'%')
+		</if>
+		<if test="goodsDesc != null">
+		AND GT.GOODS_DESC LIKE CONCAT('%',#{goodsDesc},'%')
+		</if>
+		<if test="userId != null">
+		AND GT.USER_ID  = #{userId}
+		</if>
+		<if test="goodsPictureId != null">
+		AND GT.GOODS_PICTURE_ID = #{goodsPictureId}
+		</if>
+		<if test="goodsUnitId != null">
+		AND GT.GOODS_UNIT_ID = #{goodsUnitId}
+		</if>
+		<if test="goodsUnit != null">
+		AND GT.GOODS_UNIT LIKE CONCAT('%',#{goodsUnit},'%')
+		</if>
+		<if test="status != null">
+		AND GT.STATUS = #{status}
+		</if>
+		<if test="orderPrice != null">
+		AND GT.ORDER_PRICE = #{orderPrice}
+		</if>
+		<if test="memberPrice != null">
+		AND GT.MEMBER_PRICE = #{memberPrice}
+		</if>
+		<if test="addTimeBegin != null">
+		<![CDATA[AND GT.ADD_TIME >= STR_TO_DATE(#{addTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="addTimeEnd != null">
+		<![CDATA[AND GT.ADD_TIME <= STR_TO_DATE(#{addTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeBegin != null">
+		<![CDATA[AND GT.UPDATE_TIME >= STR_TO_DATE(#{updateTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeEnd != null">
+		<![CDATA[AND GT.UPDATE_TIME <= STR_TO_DATE(#{updateTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="id != null">
+		AND GT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND GT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

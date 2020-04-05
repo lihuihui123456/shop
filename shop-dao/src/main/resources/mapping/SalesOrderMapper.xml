@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.SalesOrderMapper">
+<resultMap id="SalesOrderMap" type="SalesOrder">
+	<result column="ORDER_HEADER_ID" jdbcType="DECIMAL" property="orderHeaderId"/>
+	<result column="REFERENCE_ORDER_ID" jdbcType="DECIMAL" property="referenceOrderId"/>
+	<result column="ORDER_STATUS" jdbcType="DECIMAL" property="orderStatus"/>
+	<result column="GOODS_ID" jdbcType="DECIMAL" property="goodsId"/>
+	<result column="GOODS_UNIT" jdbcType="VARCHAR" property="goodsUnit"/>
+	<result column="DISCOUNT_FEE" jdbcType="DECIMAL" property="discountFee"/>
+	<result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney"/>
+	<result column="INTEGRAL" jdbcType="DECIMAL" property="integral"/>
+	<result column="MIN_PACKAGE_QUANTITY" jdbcType="DECIMAL" property="minPackageQuantity"/>
+	<result column="ORDERING_QUANTITY" jdbcType="DECIMAL" property="orderingQuantity"/>
+	<result column="ORDERING_TIME" jdbcType="TIMESTAMP" property="orderingTime"/>
+	<result column="CONFIRMS_QUANTITY" jdbcType="DECIMAL" property="confirmsQuantity"/>
+	<result column="CONFIRMS_TIME" jdbcType="TIMESTAMP" property="confirmsTime"/>
+	<result column="FINAL_TIME" jdbcType="TIMESTAMP" property="finalTime"/>
+	<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	<result column="OUT_OF_STOCK" jdbcType="DECIMAL" property="outOfStock"/>
+	<result column="PAYMENT" jdbcType="DECIMAL" property="payment"/>
+	<result column="COUPON" jdbcType="DECIMAL" property="coupon"/>
+	<result column="NOTE" jdbcType="VARCHAR" property="note"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	ORDER_HEADER_ID,REFERENCE_ORDER_ID,ORDER_STATUS,GOODS_ID,GOODS_UNIT,DISCOUNT_FEE,TOTAL_MONEY,INTEGRAL,MIN_PACKAGE_QUANTITY,ORDERING_QUANTITY,ORDERING_TIME,CONFIRMS_QUANTITY,CONFIRMS_TIME,FINAL_TIME,UPDATE_TIME,OUT_OF_STOCK,PAYMENT,COUPON,NOTE,ID,VERSION
+</sql>
+<sql id="SOT_Base_Column_List">
+	SOT.ORDER_HEADER_ID,SOT.REFERENCE_ORDER_ID,SOT.ORDER_STATUS,SOT.GOODS_ID,SOT.GOODS_UNIT,SOT.DISCOUNT_FEE,SOT.TOTAL_MONEY,SOT.INTEGRAL,SOT.MIN_PACKAGE_QUANTITY,SOT.ORDERING_QUANTITY,SOT.ORDERING_TIME,SOT.CONFIRMS_QUANTITY,SOT.CONFIRMS_TIME,SOT.FINAL_TIME,SOT.UPDATE_TIME,SOT.OUT_OF_STOCK,SOT.PAYMENT,SOT.COUPON,SOT.NOTE,SOT.ID,SOT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="SalesOrderMap">
+	select
+		<include refid="Base_Column_List"/>
+	from SALESORDER SOT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from SALESORDER SOT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="SalesOrder">
+	insert into SALESORDER(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{orderHeaderId,jdbcType=DECIMAL},
+	#{referenceOrderId,jdbcType=DECIMAL},
+	#{orderStatus,jdbcType=DECIMAL},
+	#{goodsId,jdbcType=DECIMAL},
+	#{goodsUnit,jdbcType=VARCHAR},
+	#{discountFee,jdbcType=DECIMAL},
+	#{totalMoney,jdbcType=DECIMAL},
+	#{integral,jdbcType=DECIMAL},
+	#{minPackageQuantity,jdbcType=DECIMAL},
+	#{orderingQuantity,jdbcType=DECIMAL},
+	#{orderingTime,jdbcType=TIMESTAMP},
+	#{confirmsQuantity,jdbcType=DECIMAL},
+	#{confirmsTime,jdbcType=TIMESTAMP},
+	#{finalTime,jdbcType=TIMESTAMP},
+	#{updateTime,jdbcType=TIMESTAMP},
+	#{outOfStock,jdbcType=DECIMAL},
+	#{payment,jdbcType=DECIMAL},
+	#{coupon,jdbcType=DECIMAL},
+	#{note,jdbcType=VARCHAR},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="SalesOrder">
+	update SALESORDER SOT
+	<set>
+		VERSION = VERSION + 1
+		<if test="orderHeaderId != null">
+		,ORDER_HEADER_ID = #{orderHeaderId,jdbcType=DECIMAL}
+		</if>
+		<if test="referenceOrderId != null">
+		,REFERENCE_ORDER_ID = #{referenceOrderId,jdbcType=DECIMAL}
+		</if>
+		<if test="orderStatus != null">
+		,ORDER_STATUS = #{orderStatus,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsId != null">
+		,GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+		</if>
+		<if test="goodsUnit != null">
+		,GOODS_UNIT = #{goodsUnit,jdbcType=VARCHAR}
+		</if>
+		<if test="discountFee != null">
+		,DISCOUNT_FEE = #{discountFee,jdbcType=DECIMAL}
+		</if>
+		<if test="totalMoney != null">
+		,TOTAL_MONEY = #{totalMoney,jdbcType=DECIMAL}
+		</if>
+		<if test="integral != null">
+		,INTEGRAL = #{integral,jdbcType=DECIMAL}
+		</if>
+		<if test="minPackageQuantity != null">
+		,MIN_PACKAGE_QUANTITY = #{minPackageQuantity,jdbcType=DECIMAL}
+		</if>
+		<if test="orderingQuantity != null">
+		,ORDERING_QUANTITY = #{orderingQuantity,jdbcType=DECIMAL}
+		</if>
+		<if test="orderingTime != null">
+		,ORDERING_TIME = #{orderingTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="confirmsQuantity != null">
+		,CONFIRMS_QUANTITY = #{confirmsQuantity,jdbcType=DECIMAL}
+		</if>
+		<if test="confirmsTime != null">
+		,CONFIRMS_TIME = #{confirmsTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="finalTime != null">
+		,FINAL_TIME = #{finalTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateTime != null">
+		,UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="outOfStock != null">
+		,OUT_OF_STOCK = #{outOfStock,jdbcType=DECIMAL}
+		</if>
+		<if test="payment != null">
+		,PAYMENT = #{payment,jdbcType=DECIMAL}
+		</if>
+		<if test="coupon != null">
+		,COUPON = #{coupon,jdbcType=DECIMAL}
+		</if>
+		<if test="note != null">
+		,NOTE = #{note,jdbcType=VARCHAR}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="SalesOrder" resultMap="SalesOrderMap">
+	select
+	<include refid="SOT_Base_Column_List"/>
+	from SALESORDER SOT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="SalesOrderMap">
+	select
+	<include refid="SOT_Base_Column_List"/>
+	from SALESORDER SOT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="orderHeaderId != null">
+		AND SOT.ORDER_HEADER_ID = #{orderHeaderId}
+		</if>
+		<if test="referenceOrderId != null">
+		AND SOT.REFERENCE_ORDER_ID = #{referenceOrderId}
+		</if>
+		<if test="orderStatus != null">
+		AND SOT.ORDER_STATUS = #{orderStatus}
+		</if>
+		<if test="goodsId != null">
+		AND SOT.GOODS_ID = #{goodsId}
+		</if>
+		<if test="goodsUnit != null">
+		AND SOT.GOODS_UNIT LIKE CONCAT('%',#{goodsUnit},'%')
+		</if>
+		<if test="discountFee != null">
+		AND SOT.DISCOUNT_FEE = #{discountFee}
+		</if>
+		<if test="totalMoney != null">
+		AND SOT.TOTAL_MONEY = #{totalMoney}
+		</if>
+		<if test="integral != null">
+		AND SOT.INTEGRAL = #{integral}
+		</if>
+		<if test="minPackageQuantity != null">
+		AND SOT.MIN_PACKAGE_QUANTITY = #{minPackageQuantity}
+		</if>
+		<if test="orderingQuantity != null">
+		AND SOT.ORDERING_QUANTITY = #{orderingQuantity}
+		</if>
+		<if test="orderingTimeBegin != null">
+		<![CDATA[AND SOT.ORDERING_TIME >= STR_TO_DATE(#{orderingTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="orderingTimeEnd != null">
+		<![CDATA[AND SOT.ORDERING_TIME <= STR_TO_DATE(#{orderingTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="confirmsQuantity != null">
+		AND SOT.CONFIRMS_QUANTITY = #{confirmsQuantity}
+		</if>
+		<if test="confirmsTimeBegin != null">
+		<![CDATA[AND SOT.CONFIRMS_TIME >= STR_TO_DATE(#{confirmsTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="confirmsTimeEnd != null">
+		<![CDATA[AND SOT.CONFIRMS_TIME <= STR_TO_DATE(#{confirmsTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="finalTimeBegin != null">
+		<![CDATA[AND SOT.FINAL_TIME >= STR_TO_DATE(#{finalTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="finalTimeEnd != null">
+		<![CDATA[AND SOT.FINAL_TIME <= STR_TO_DATE(#{finalTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeBegin != null">
+		<![CDATA[AND SOT.UPDATE_TIME >= STR_TO_DATE(#{updateTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeEnd != null">
+		<![CDATA[AND SOT.UPDATE_TIME <= STR_TO_DATE(#{updateTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="outOfStock != null">
+		AND SOT.OUT_OF_STOCK = #{outOfStock}
+		</if>
+		<if test="payment != null">
+		AND SOT.PAYMENT = #{payment}
+		</if>
+		<if test="coupon != null">
+		AND SOT.COUPON = #{coupon}
+		</if>
+		<if test="note != null">
+		AND SOT.NOTE LIKE CONCAT('%',#{note},'%')
+		</if>
+		<if test="id != null">
+		AND SOT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND SOT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

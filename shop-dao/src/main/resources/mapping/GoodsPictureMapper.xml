@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.GoodsPictureMapper">
+	<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+	<resultMap id="GoodsPictureMap" type="GoodsPicture">
+	<result column="GOODS_ID" jdbcType="DECIMAL" property="goodsId"/>
+	<result column="URL" jdbcType="VARCHAR" property="url"/>
+	<result column="SEQ" jdbcType="DECIMAL" property="seq"/>
+	<result column="IS_MAIN" jdbcType="DECIMAL" property="isMain"/>
+	<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	GOODS_ID,URL,SEQ,IS_MAIN,CREATE_TIME,ID,VERSION
+</sql>
+<sql id="GPT_Base_Column_List">
+	GPT.GOODS_ID,GPT.URL,GPT.SEQ,GPT.IS_MAIN,GPT.CREATE_TIME,GPT.ID,GPT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="GoodsPictureMap">
+	select
+		<include refid="Base_Column_List"/>
+	from goods_picture
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from goods_picture
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="GoodsPicture">
+	insert into goods_picture(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{goodsId,jdbcType=DECIMAL},
+	#{url,jdbcType=VARCHAR},
+	#{seq,jdbcType=DECIMAL},
+	#{isMain,jdbcType=DECIMAL},
+	#{createTime,jdbcType=TIMESTAMP},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="GoodsPicture">
+	update goods_picture GPT
+	<set>
+		VERSION = VERSION + 1
+		<if test="goodsId != null">
+		,GOODS_ID = #{goodsId,jdbcType=DECIMAL}
+		</if>
+		<if test="url != null">
+		,URL = #{url,jdbcType=VARCHAR}
+		</if>
+		<if test="seq != null">
+		,SEQ = #{seq,jdbcType=DECIMAL}
+		</if>
+		<if test="isMain != null">
+		,IS_MAIN = #{isMain,jdbcType=DECIMAL}
+		</if>
+		<if test="createTime != null">
+		,CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="GoodsPicture" resultMap="GoodsPictureMap">
+	select
+	<include refid="GPT_Base_Column_List"/>
+	from goods_picture GPT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="GoodsPictureMap">
+	select
+	<include refid="GPT_Base_Column_List"/>
+	from goods_picture GPT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="goodsId != null">
+		AND GPT.GOODS_ID = #{goodsId}
+		</if>
+		<if test="url != null">
+		AND GPT.URL LIKE CONCAT('%',#{url},'%')
+		</if>
+		<if test="seq != null">
+		AND GPT.SEQ = #{seq}
+		</if>
+		<if test="isMain != null">
+		AND GPT.IS_MAIN = #{isMain}
+		</if>
+		<if test="createTimeBegin != null">
+		<![CDATA[AND GPT.CREATE_TIME >= STR_TO_DATE(#{createTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="createTimeEnd != null">
+		<![CDATA[AND GPT.CREATE_TIME <= STR_TO_DATE(#{createTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="id != null">
+		AND GPT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND GPT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

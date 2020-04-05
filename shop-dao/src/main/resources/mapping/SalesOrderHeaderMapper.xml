@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.SalesOrderHeaderMapper">
+	<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+	<resultMap id="SalesOrderHeaderMap" type="SalesOrderHeader">
+	<result column="SELLER_ID" jdbcType="DECIMAL" property="sellerId"/>
+	<result column="BUYER_ID" jdbcType="DECIMAL" property="buyerId"/>
+	<result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate"/>
+	<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	<result column="TOTAL_MONEY" jdbcType="DECIMAL" property="totalMoney"/>
+	<result column="TOTAL_AMOUNT" jdbcType="DECIMAL" property="totalAmount"/>
+	<result column="ORDERING_TOTAL_MONEY" jdbcType="DECIMAL" property="orderingTotalMoney"/>
+	<result column="ORDER_TYPE" jdbcType="DECIMAL" property="orderType"/>
+	<result column="AREA_ID" jdbcType="DECIMAL" property="areaId"/>
+	<result column="ORDER_ADDRESS" jdbcType="VARCHAR" property="orderAddress"/>
+	<result column="CUSTOMER" jdbcType="VARCHAR" property="customer"/>
+	<result column="CUSTOMER_TEL" jdbcType="VARCHAR" property="customerTel"/>
+	<result column="CUSTOMER_POST_CODE" jdbcType="VARCHAR" property="customerPostCode"/>
+	<result column="DELIVERY_FEE" jdbcType="DECIMAL" property="deliveryFee"/>
+	<result column="NOTE" jdbcType="VARCHAR" property="note"/>
+	<result column="MESSAGE" jdbcType="VARCHAR" property="message"/>
+	<result column="SETTLE_TYPE" jdbcType="DECIMAL" property="settleType"/>
+	<result column="PRINT_TIMES" jdbcType="DECIMAL" property="printTimes"/>
+	<result column="ALL_ORDER_CLOSED" jdbcType="DECIMAL" property="allOrderClosed"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	SELLER_ID,BUYER_ID,CREATE_DATE,UPDATE_TIME,TOTAL_MONEY,TOTAL_AMOUNT,ORDERING_TOTAL_MONEY,ORDER_TYPE,AREA_ID,ORDER_ADDRESS,CUSTOMER,CUSTOMER_TEL,CUSTOMER_POST_CODE,DELIVERY_FEE,NOTE,MESSAGE,SETTLE_TYPE,PRINT_TIMES,ALL_ORDER_CLOSED,ID,VERSION
+</sql>
+<sql id="SOHT_Base_Column_List">
+	SOHT.SELLER_ID,SOHT.BUYER_ID,SOHT.CREATE_DATE,SOHT.UPDATE_TIME,SOHT.TOTAL_MONEY,SOHT.TOTAL_AMOUNT,SOHT.ORDERING_TOTAL_MONEY,SOHT.ORDER_TYPE,SOHT.AREA_ID,SOHT.ORDER_ADDRESS,SOHT.CUSTOMER,SOHT.CUSTOMER_TEL,SOHT.CUSTOMER_POST_CODE,SOHT.DELIVERY_FEE,SOHT.NOTE,SOHT.MESSAGE,SOHT.SETTLE_TYPE,SOHT.PRINT_TIMES,SOHT.ALL_ORDER_CLOSED,SOHT.ID,SOHT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="SalesOrderHeaderMap">
+	select
+		<include refid="Base_Column_List"/>
+	from SALESORDERHEADER SOHT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from SALESORDERHEADER SOHT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="SalesOrderHeader">
+	insert into SALESORDERHEADER(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{sellerId,jdbcType=DECIMAL},
+	#{buyerId,jdbcType=DECIMAL},
+	#{createDate,jdbcType=TIMESTAMP},
+	#{updateTime,jdbcType=TIMESTAMP},
+	#{totalMoney,jdbcType=DECIMAL},
+	#{totalAmount,jdbcType=DECIMAL},
+	#{orderingTotalMoney,jdbcType=DECIMAL},
+	#{orderType,jdbcType=DECIMAL},
+	#{areaId,jdbcType=DECIMAL},
+	#{orderAddress,jdbcType=VARCHAR},
+	#{customer,jdbcType=VARCHAR},
+	#{customerTel,jdbcType=VARCHAR},
+	#{customerPostCode,jdbcType=VARCHAR},
+	#{deliveryFee,jdbcType=DECIMAL},
+	#{note,jdbcType=VARCHAR},
+	#{message,jdbcType=VARCHAR},
+	#{settleType,jdbcType=DECIMAL},
+	#{printTimes,jdbcType=DECIMAL},
+	#{allOrderClosed,jdbcType=DECIMAL},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="SalesOrderHeader">
+	update SALESORDERHEADER SOHT
+	<set>
+		VERSION = VERSION + 1
+		<if test="sellerId != null">
+		,SELLER_ID = #{sellerId,jdbcType=DECIMAL}
+		</if>
+		<if test="buyerId != null">
+		,BUYER_ID = #{buyerId,jdbcType=DECIMAL}
+		</if>
+		<if test="createDate != null">
+		,CREATE_DATE = #{createDate,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updateTime != null">
+		,UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="totalMoney != null">
+		,TOTAL_MONEY = #{totalMoney,jdbcType=DECIMAL}
+		</if>
+		<if test="totalAmount != null">
+		,TOTAL_AMOUNT = #{totalAmount,jdbcType=DECIMAL}
+		</if>
+		<if test="orderingTotalMoney != null">
+		,ORDERING_TOTAL_MONEY = #{orderingTotalMoney,jdbcType=DECIMAL}
+		</if>
+		<if test="orderType != null">
+		,ORDER_TYPE = #{orderType,jdbcType=DECIMAL}
+		</if>
+		<if test="areaId != null">
+		,AREA_ID = #{areaId,jdbcType=DECIMAL}
+		</if>
+		<if test="orderAddress != null">
+		,ORDER_ADDRESS = #{orderAddress,jdbcType=VARCHAR}
+		</if>
+		<if test="customer != null">
+		,CUSTOMER = #{customer,jdbcType=VARCHAR}
+		</if>
+		<if test="customerTel != null">
+		,CUSTOMER_TEL = #{customerTel,jdbcType=VARCHAR}
+		</if>
+		<if test="customerPostCode != null">
+		,CUSTOMER_POST_CODE = #{customerPostCode,jdbcType=VARCHAR}
+		</if>
+		<if test="deliveryFee != null">
+		,DELIVERY_FEE = #{deliveryFee,jdbcType=DECIMAL}
+		</if>
+		<if test="note != null">
+		,NOTE = #{note,jdbcType=VARCHAR}
+		</if>
+		<if test="message != null">
+		,MESSAGE = #{message,jdbcType=VARCHAR}
+		</if>
+		<if test="settleType != null">
+		,SETTLE_TYPE = #{settleType,jdbcType=DECIMAL}
+		</if>
+		<if test="printTimes != null">
+		,PRINT_TIMES = #{printTimes,jdbcType=DECIMAL}
+		</if>
+		<if test="allOrderClosed != null">
+		,ALL_ORDER_CLOSED = #{allOrderClosed,jdbcType=DECIMAL}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="SalesOrderHeader" resultMap="SalesOrderHeaderMap">
+	select
+	<include refid="SOHT_Base_Column_List"/>
+	from SALESORDERHEADER SOHT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="SalesOrderHeaderMap">
+	select
+	<include refid="SOHT_Base_Column_List"/>
+	from SALESORDERHEADER SOHT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="sellerId != null">
+		AND SOHT.SELLER_ID = #{sellerId}
+		</if>
+		<if test="buyerId != null">
+		AND SOHT.BUYER_ID = #{buyerId}
+		</if>
+		<if test="createDateBegin != null">
+		<![CDATA[AND SOHT.CREATE_DATE >= STR_TO_DATE(#{createDateBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="createDateEnd != null">
+		<![CDATA[AND SOHT.CREATE_DATE <= STR_TO_DATE(#{createDateEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeBegin != null">
+		<![CDATA[AND SOHT.UPDATE_TIME >= STR_TO_DATE(#{updateTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="updateTimeEnd != null">
+		<![CDATA[AND SOHT.UPDATE_TIME <= STR_TO_DATE(#{updateTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="totalMoney != null">
+		AND SOHT.TOTAL_MONEY = #{totalMoney}
+		</if>
+		<if test="totalAmount != null">
+		AND SOHT.TOTAL_AMOUNT = #{totalAmount}
+		</if>
+		<if test="orderingTotalMoney != null">
+		AND SOHT.ORDERING_TOTAL_MONEY = #{orderingTotalMoney}
+		</if>
+		<if test="orderType != null">
+		AND SOHT.ORDER_TYPE = #{orderType}
+		</if>
+		<if test="areaId != null">
+		AND SOHT.AREA_ID = #{areaId}
+		</if>
+		<if test="orderAddress != null">
+		AND SOHT.ORDER_ADDRESS LIKE CONCAT('%',#{orderAddress},'%')
+		</if>
+		<if test="customer != null">
+		AND SOHT.CUSTOMER LIKE CONCAT('%',#{customer},'%')
+		</if>
+		<if test="customerTel != null">
+		AND SOHT.CUSTOMER_TEL LIKE CONCAT('%',#{customerTel},'%')
+		</if>
+		<if test="customerPostCode != null">
+		AND SOHT.CUSTOMER_POST_CODE LIKE CONCAT('%',#{customerPostCode},'%')
+		</if>
+		<if test="deliveryFee != null">
+		AND SOHT.DELIVERY_FEE = #{deliveryFee}
+		</if>
+		<if test="note != null">
+		AND SOHT.NOTE LIKE CONCAT('%',#{note},'%')
+		</if>
+		<if test="message != null">
+		AND SOHT.MESSAGE LIKE CONCAT('%',#{message},'%')
+		</if>
+		<if test="settleType != null">
+		AND SOHT.SETTLE_TYPE = #{settleType}
+		</if>
+		<if test="printTimes != null">
+		AND SOHT.PRINT_TIMES = #{printTimes}
+		</if>
+		<if test="allOrderClosed != null">
+		AND SOHT.ALL_ORDER_CLOSED = #{allOrderClosed}
+		</if>
+		<if test="id != null">
+		AND SOHT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND SOHT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>

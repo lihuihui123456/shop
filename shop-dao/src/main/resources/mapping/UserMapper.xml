@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lzh.shop.mapper.UserMapper">
+	<cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+	<resultMap id="UserMap" type="User">
+	<result column="LOGIN_NAME" jdbcType="VARCHAR" property="loginName"/>
+	<result column="PASSWORD" jdbcType="VARCHAR" property="password"/>
+	<result column="NAME" jdbcType="VARCHAR" property="name"/>
+	<result column="PHONE" jdbcType="VARCHAR" property="phone"/>
+	<result column="MOBILE_PHONE" jdbcType="VARCHAR" property="mobilePhone"/>
+	<result column="EMAIL" jdbcType="VARCHAR" property="email"/>
+	<result column="ADMIN" jdbcType="DECIMAL" property="admin"/>
+	<result column="USER_TYPE" jdbcType="DECIMAL" property="userType"/>
+	<result column="DEPARTMENT_ID" jdbcType="DECIMAL" property="departmentId"/>
+	<result column="LOGIN_TIME" jdbcType="TIMESTAMP" property="loginTime"/>
+	<result column="LAST_TIME" jdbcType="TIMESTAMP" property="lastTime"/>
+	<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+	<result column="AREA_ID" jdbcType="DECIMAL" property="areaId"/>
+	<result column="ADDRESS" jdbcType="VARCHAR" property="address"/>
+	<result column="CAN_LOGIN" jdbcType="DECIMAL" property="canLogin"/>
+	<result column="IMAGE_URL" jdbcType="VARCHAR" property="imageUrl"/>
+	<result column="ID" jdbcType="DECIMAL" property="id"/>
+	<result column="VERSION" jdbcType="DECIMAL" property="version"/>
+</resultMap>
+<sql id="Base_Column_List">
+	LOGIN_NAME,PASSWORD,NAME,PHONE,MOBILE_PHONE,EMAIL,ADMIN,USER_TYPE,DEPARTMENT_ID,LOGIN_TIME,LAST_TIME,CREATE_TIME,AREA_ID,ADDRESS,CAN_LOGIN,IMAGE_URL,ID,VERSION
+</sql>
+<sql id="UT_Base_Column_List">
+	UT.LOGIN_NAME,UT.PASSWORD,UT.NAME,UT.PHONE,UT.MOBILE_PHONE,UT.EMAIL,UT.ADMIN,UT.USER_TYPE,UT.DEPARTMENT_ID,UT.LOGIN_TIME,UT.LAST_TIME,UT.CREATE_TIME,UT.AREA_ID,UT.ADDRESS,UT.CAN_LOGIN,UT.IMAGE_URL,UT.ID,UT.VERSION
+</sql>
+<select id="get" parameterType="long" resultMap="UserMap">
+	select
+		<include refid="Base_Column_List"/>
+	from USER UT
+	where ID = #{id,jdbcType=DECIMAL}
+</select>
+<delete id="delete" parameterType="long">
+	delete
+	from USER UT
+	where ID = #{id,jdbcType=DECIMAL}
+</delete>
+<insert id="insert" parameterType="User">
+	insert into USER(
+		<include refid="Base_Column_List"/>
+	) values (
+	#{loginName,jdbcType=VARCHAR},
+	#{password,jdbcType=VARCHAR},
+	#{name,jdbcType=VARCHAR},
+	#{phone,jdbcType=VARCHAR},
+	#{mobilePhone,jdbcType=VARCHAR},
+	#{email,jdbcType=VARCHAR},
+	#{admin,jdbcType=DECIMAL},
+	#{userType,jdbcType=DECIMAL},
+	#{departmentId,jdbcType=DECIMAL},
+	#{loginTime,jdbcType=TIMESTAMP},
+	#{lastTime,jdbcType=TIMESTAMP},
+	#{createTime,jdbcType=TIMESTAMP},
+	#{areaId,jdbcType=DECIMAL},
+	#{address,jdbcType=VARCHAR},
+	#{canLogin,jdbcType=DECIMAL},
+	#{imageUrl,jdbcType=VARCHAR},
+	#{id,jdbcType=DECIMAL},
+	#{version,jdbcType=DECIMAL}
+	)
+</insert>
+<update id="update" parameterType="User">
+	update USER UT
+	<set>
+		VERSION = VERSION + 1
+		<if test="loginName != null">
+		,LOGIN_NAME = #{loginName,jdbcType=VARCHAR}
+		</if>
+		<if test="password != null">
+		,PASSWORD = #{password,jdbcType=VARCHAR}
+		</if>
+		<if test="name != null">
+		,NAME = #{name,jdbcType=VARCHAR}
+		</if>
+		<if test="phone != null">
+		,PHONE = #{phone,jdbcType=VARCHAR}
+		</if>
+		<if test="mobilePhone != null">
+		,MOBILE_PHONE = #{mobilePhone,jdbcType=VARCHAR}
+		</if>
+		<if test="email != null">
+		,EMAIL = #{email,jdbcType=VARCHAR}
+		</if>
+		<if test="admin != null">
+		,ADMIN = #{admin,jdbcType=DECIMAL}
+		</if>
+		<if test="userType != null">
+		,USER_TYPE = #{userType,jdbcType=DECIMAL}
+		</if>
+		<if test="departmentId != null">
+		,DEPARTMENT_ID = #{departmentId,jdbcType=DECIMAL}
+		</if>
+		<if test="loginTime != null">
+		,LOGIN_TIME = #{loginTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="lastTime != null">
+		,LAST_TIME = #{lastTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="createTime != null">
+		,CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="areaId != null">
+		,AREA_ID = #{areaId,jdbcType=DECIMAL}
+		</if>
+		<if test="address != null">
+		,ADDRESS = #{address,jdbcType=VARCHAR}
+		</if>
+		<if test="canLogin != null">
+		,CAN_LOGIN = #{canLogin,jdbcType=DECIMAL}
+		</if>
+		<if test="imageUrl != null">
+		,IMAGE_URL = #{imageUrl,jdbcType=VARCHAR}
+		</if>
+	</set>
+	where ID = #{id,jdbcType=DECIMAL} and version = #{version,jdbcType=DECIMAL}
+</update>
+<select id="findListForExample" parameterType="User" resultMap="UserMap">
+	select
+	<include refid="UT_Base_Column_List"/>
+	from USER UT
+	<include refid="common_query_condition"/>
+</select>
+<select id="findListForMap" parameterType="map" resultMap="UserMap">
+	select
+	<include refid="UT_Base_Column_List"/>
+	from USER UT
+	<include refid="common_query_condition"/>
+</select>
+<sql id="common_query_condition">
+	<where>
+		<if test="loginName != null">
+		AND UT.LOGIN_NAME LIKE CONCAT('%',#{loginName},'%')
+		</if>
+		<if test="password != null">
+		AND UT.PASSWORD LIKE CONCAT('%',#{password},'%')
+		</if>
+		<if test="name != null">
+		AND UT.NAME LIKE CONCAT('%',#{name},'%')
+		</if>
+		<if test="phone != null">
+		AND UT.PHONE LIKE CONCAT('%',#{phone},'%')
+		</if>
+		<if test="mobilePhone != null">
+		AND UT.MOBILE_PHONE LIKE CONCAT('%',#{mobilePhone},'%')
+		</if>
+		<if test="email != null">
+		AND UT.EMAIL LIKE CONCAT('%',#{email},'%')
+		</if>
+		<if test="admin != null">
+		AND UT.ADMIN = #{admin}
+		</if>
+		<if test="userType != null">
+		AND UT.USER_TYPE = #{userType}
+		</if>
+		<if test="departmentId != null">
+		AND UT.DEPARTMENT_ID = #{departmentId}
+		</if>
+		<if test="loginTimeBegin != null">
+		<![CDATA[AND UT.LOGIN_TIME >= STR_TO_DATE(#{loginTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="loginTimeEnd != null">
+		<![CDATA[AND UT.LOGIN_TIME <= STR_TO_DATE(#{loginTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="lastTimeBegin != null">
+		<![CDATA[AND UT.LAST_TIME >= STR_TO_DATE(#{lastTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="lastTimeEnd != null">
+		<![CDATA[AND UT.LAST_TIME <= STR_TO_DATE(#{lastTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="createTimeBegin != null">
+		<![CDATA[AND UT.CREATE_TIME >= STR_TO_DATE(#{createTimeBegin},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="createTimeEnd != null">
+		<![CDATA[AND UT.CREATE_TIME <= STR_TO_DATE(#{createTimeEnd},'%Y-%m-%d %H:%i:%s')]]>
+		</if>
+		<if test="areaId != null">
+		AND UT.AREA_ID = #{areaId}
+		</if>
+		<if test="address != null">
+		AND UT.ADDRESS LIKE CONCAT('%',#{address},'%')
+		</if>
+		<if test="canLogin != null">
+		AND UT.CAN_LOGIN = #{canLogin}
+		</if>
+		<if test="imageUrl != null">
+		AND UT.IMAGE_URL LIKE CONCAT('%',#{imageUrl},'%')
+		</if>
+		<if test="id != null">
+		AND UT.ID = #{id}
+		</if>
+		<if test="version != null">
+		AND UT.VERSION = #{version}
+		</if>
+	</where>
+</sql>
+</mapper>
