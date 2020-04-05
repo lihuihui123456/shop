@@ -52,6 +52,7 @@
                     <include>**/*.properties</include>
                     <include>mapping/*.xml</include>
                     <include>**/*.html</include>
+                    <include>**/**</include>
                 </includes>
                 <filtering>true</filtering>
             </resource>

@@ -1,9 +1,7 @@
 package com.lzh.shopservice;
 
-import com.lzh.shopdao.dao.GgcIntelligentAllotOrderHeaderDao;
-import com.lzh.shopdao.dao.UserReadDao;
+import com.lzh.shop.dao.GgcIntelligentAllotOrderHeaderDao;
 import com.lzh.shopentity.User;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +17,6 @@ import java.util.List;
 public class GgcStockService {
     @Autowired
     private GgcIntelligentAllotOrderHeaderDao ggcIntelligentAllotOrderHeaderDao;
-    @Autowired
-    private UserReadDao userReadDao;
     public int findDataByMapper() {
         int listForMapCountSize = ggcIntelligentAllotOrderHeaderDao.findListForMapCountSize(new HashMap());
         return listForMapCountSize;
@@ -31,6 +27,6 @@ public class GgcStockService {
         return list;
     }
     public User findUser(Long id) {
-        return userReadDao.get(id) ;
+        return new User() ;
     }
 }

@@ -34,7 +34,7 @@ public class Page<T> implements Serializable {
     public static final String DESC = "desc";
 
     // default page size
-    public static final int SIZE = 15;
+    public static final int SIZE = 10;
 
     //-- 分页参数 --//
     protected int pageNo = 1;
@@ -55,7 +55,9 @@ public class Page<T> implements Serializable {
     //-- 返回结果 --//
     protected List<T> result = new ArrayList<T>();
 
-
+    public Page() {
+        this.pageSize = SIZE;
+    }
     public Page(int pageSize) {
         this.pageSize = pageSize;
     }

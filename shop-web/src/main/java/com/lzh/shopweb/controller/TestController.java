@@ -82,7 +82,9 @@ public class TestController {
         json.put("totalAmount", totalAmount);
         json.put("totalAmount_td", String.format("%.2f",map.get("totalAmount_td")));
         json.put("totalNum_td", map.get("totalNum_td"));
-        this.response(response, json.toString());
+        String jsonStr="{ \"id\": 1, \"list\": [1, 2, 3], \"showcase\": [1, 2, 3], \"img\": \"/static/img/goods1.jpg\", \"name\": \"车子111\", \"desc\": \"1\",    \"price\": \"100\", \"origin_price\": \"33\" }";
+        Object parse = JSONObject.parse(jsonStr);
+        this.response(response, parse.toString());
     }
 
 

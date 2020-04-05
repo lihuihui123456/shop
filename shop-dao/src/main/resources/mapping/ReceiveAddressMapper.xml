@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.b2bex.party.mapper.ReceiveAddressMapper" >
+    <cache eviction="LRU" type="org.mybatis.caches.memcached.MemcachedCache"/>
+    <resultMap id="ReceiveAddressMap" type="ReceiveAddress" >
+        <id column="ID" property="id" jdbcType="DECIMAL" />
+        <result column="VERSION" property="version" jdbcType="DECIMAL" />
+        <result column="AREA_ID" property="areaId" jdbcType="DECIMAL" />
+        <result column="ADDRESS" property="address" jdbcType="VARCHAR" />
+        <result column="CONSIGNEE" property="consignee" jdbcType="VARCHAR" />
+        <result column="TEL" property="tel" jdbcType="VARCHAR" />
+        <result column="DEFAULT_ADDRESS" property="defaultAddress" jdbcType="REAL" />
+        <result column="PARTY_ID" property="partyId" jdbcType="DECIMAL" />
+        <result column="POST_CODE"  property="postCode" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    ID, VERSION,  AREA_ID, ADDRESS,  CONSIGNEE, TEL, DEFAULT_ADDRESS,PARTY_ID,POST_CODE
+  </sql>
+
+    <select id="findListForMap" resultMap="ReceiveAddressMap" parameterType="ReceiveAddress" >
+        SELECT
+        <if test="distinct" >
+            DISTINCT
+        </if>
+        <include refid="Base_Column_List" />
+        FROM PAR_RECEIVE_ADDRESS
+        <where>
+            <if test="areaId != null" >
+                AND AREA_ID = #{areaId,jdbcType=DECIMAL}
+            </if>
+            <if test="address != null" >
+                AND ADDRESS = #{address,jdbcType=VARCHAR}
+            </if>
+            <if test="consignee != null" >
+                AND CONSIGNEE = #{consignee,jdbcType=VARCHAR}
+            </if>
+            <if test="tel != null" >
+                AND TEL = #{tel,jdbcType=VARCHAR}
+            </if>
+            <if test="defaultAddress != null" >
+                AND DEFAULT_ADDRESS = #{defaultAddress,jdbcType=REAL}
+            </if>
+            <if test="partyId != null" >
+                AND PARTY_ID = #{partyId,jdbcType=DECIMAL}
+            </if>
+        </where>
+        <if test="orderBy != null">
+            ORDER BY DEFAULT_ADDRESS DESC
+        </if>
+        <if test="orderBy == null">
+            ORDER BY ID
+        </if>
+    </select>
+    <select id="findListForMapByPartyId" resultMap="ReceiveAddressMap" parameterType="ReceiveAddress" >
+        SELECT DISTINCT
+        <include refid="Base_Column_List" />
+        FROM PAR_RECEIVE_ADDRESS
+        <where>
+            <if test="partyId != null" >
+                AND PARTY_ID = #{partyId,jdbcType=DECIMAL}
+            </if>
+        </where>
+        ORDER BY ID
+    </select>
+
+    <select id="get" resultMap="ReceiveAddressMap" parameterType="long" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM PAR_RECEIVE_ADDRESS
+        WHERE ID = #{id,jdbcType=DECIMAL}
+    </select>
+
+    <delete id="delete" parameterType="long" >
+    DELETE FROM PAR_RECEIVE_ADDRESS
+    WHERE ID = #{id,jdbcType=DECIMAL}
+  </delete>
+    <insert id="insert" parameterType="ReceiveAddress" >
+    INSERT INTO PAR_RECEIVE_ADDRESS (ID, VERSION, PARTY_ID,
+      AREA_ID, ADDRESS, CONSIGNEE, TEL, DEFAULT_ADDRESS,POST_CODE
+      )
+    VALUES (#{id,jdbcType=DECIMAL}, #{version,jdbcType=DECIMAL}, #{partyId,jdbcType=DECIMAL},
+      #{areaId,jdbcType=DECIMAL}, #{address,jdbcType=VARCHAR},
+      #{consignee,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{defaultAddress,jdbcType=REAL},
+      #{postCode,jdbcType=VARCHAR}
+      )
+
+  </insert>
+
+    <update id="update" parameterType="ReceiveAddress" >
+        UPDATE PAR_RECEIVE_ADDRESS
+        <set >
+            VERSION = #{version,jdbcType=DECIMAL},
+            PARTY_ID = #{partyId,jdbcType=DECIMAL},
+            AREA_ID = #{areaId,jdbcType=DECIMAL},
+            ADDRESS = #{address,jdbcType=VARCHAR},
+            CONSIGNEE = #{consignee,jdbcType=VARCHAR},
+            TEL = #{tel,jdbcType=VARCHAR},
+            DEFAULT_ADDRESS = #{defaultAddress,jdbcType=REAL},
+            POST_CODE = #{postCode,jdbcType=VARCHAR}
+        </set>
+        WHERE ID = #{id,jdbcType=DECIMAL}
+    </update>
+</mapper>

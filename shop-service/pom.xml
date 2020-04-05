@@ -55,6 +55,17 @@
                 </configuration>
             </plugin>-->
         </plugins>
+        <resources>
+            <!-- 打包是资源文件打入 -->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.yml</include>
+                    <include>mapping/*.xml</include>
+                </includes>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
     </build>
 
 </project>
